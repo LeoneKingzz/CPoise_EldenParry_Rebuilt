@@ -71,7 +71,7 @@ void EldenParry::update() {
 }
 
 float EldenParry::calculateRiposteReflex(RE::Actor *a_actor) {
-	auto bHasQuickReflexes = a_actor->HasPerk(RE::BGSPerk::LookupByEditorID("ORD_Bck40_QuickReflexes_Perk_40_QuickReflexes")->As<RE::BGSPerk>());
+	auto bHasQuickReflexes = a_actor->HasPerk(RE::BGSPerk::LookupByEditorID(Milf::GetSingleton()->perks.QuickReflexes_Perk)->As<RE::BGSPerk>());
 	auto bDefenderHasShield = Utils::isEquippedShield(a_actor);
 	float a_value = 0.0f;
 	if (bDefenderHasShield == false) {
@@ -504,6 +504,7 @@ void Milf::Load()
 
 	core.Load(ini);
 	scores.Load(ini);
+	perks.Load(ini);
 
 	ini.SaveFile(path);
 }
@@ -583,4 +584,24 @@ void Milf::Scores::Load(CSimpleIniA &a_ini)
 					  ";Bonus score for power attacks.");
 
 	detail::get_value(a_ini, playerScore, section, "PlayerScore", ";Bonus score for the Player.");
+}
+
+void Milf::Perks::Load(CSimpleIniA& a_ini)
+{
+	static const char* section = "Perks";
+
+	detail::get_value(a_ini, EldenParry_Perk1, section, "EldenParry_Perk1",
+		";EDID of the Elden parry Perk - 1st Level");
+	detail::get_value(a_ini, EldenParry_Perk2, section, "EldenParry_Perk2",
+		";EDID of the Elden parry Perk - 2nd Level");
+	detail::get_value(a_ini, EldenParry_Spell1, section, "EldenParry_Spell1",
+		";EDID of the Elden parry buff - 1st Level");
+	detail::get_value(a_ini, EldenParry_Spell2, section, "EldenParry_Spell2",
+		";EDID of the Elden parry buff - 2nd Level");
+	detail::get_value(a_ini, QuickReflexes_Perk, section, "QuickReflexes_Perk",
+		";EDID of the Quick Reflexes Perk");
+	detail::get_value(a_ini, DragonsTail_Perk, section, "DragonsTail_Perk",
+		";EDID of the Dragon's Tail Perk");
+	detail::get_value(a_ini, Deliverance_Perk, section, "Deliverance_Perk",
+		";EDID of the Deliverance Perk");
 }

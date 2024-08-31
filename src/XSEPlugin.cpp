@@ -86,6 +86,7 @@ void onSKSEInit()
 	ActorCache::RegisterEvents();
 	EldenSettings::readSettings();
 	EldenHooks::install();
+	Milf::GetSingleton()->Load();
 }
 
 void InitializeLog()

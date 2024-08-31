@@ -66,6 +66,19 @@ public:
 		float playerScore{0.0f};
 	} scores;
 
+	struct Perks
+	{
+		void Load(CSimpleIniA &a_ini);
+		RE::BSFixedString EldenParry_Perk1 = "ORD_Bck20_TimedBlock_Perk_20_OrdASISExclude";
+		RE::BSFixedString EldenParry_Perk2 = "ORD_Bck20_TimedBlock_Perk_50_OrdASISExclude";
+		RE::BSFixedString EldenParry_Spell1 = "ORD_Bck_TimedBlock_Spell_Proc";
+		RE::BSFixedString EldenParry_Spell2 = "ORD_Bck_TimedBlock_Spell_Proc_2";
+		RE::BSFixedString DragonsTail_Perk = "ORD_Bck60_DragonTail_Perk_60_OrdASISExclude";
+		RE::BSFixedString Deliverance_Perk = "ORD_Bck90_Deliverance_Perk_90_OrdASISExclude";
+		RE::BSFixedString QuickReflexes_Perk = "ORD_Bck40_QuickReflexes_Perk_40_QuickReflexes";
+
+	} perks;
+
 private:
 	Milf() = default;
 	Milf(const Milf &) = delete;

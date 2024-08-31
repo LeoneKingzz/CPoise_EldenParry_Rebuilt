@@ -168,19 +168,19 @@ public:
 	{
 		const auto caster = a_defender->GetMagicCaster(RE::MagicSystem::CastingSource::kInstant);
 		float a_reprisal = (EldenParry::GetSingleton()->AttackerBeatsParry(a_aggressor, a_defender));
-		auto bHasEldenParryPerk2 = a_defender->HasPerk(RE::BGSPerk::LookupByEditorID("ORD_Bck20_TimedBlock_Perk_50_OrdASISExclude")->As<RE::BGSPerk>());
-		auto bHasEldenParryPerk1 = a_defender->HasPerk(RE::BGSPerk::LookupByEditorID("ORD_Bck20_TimedBlock_Perk_20_OrdASISExclude")->As<RE::BGSPerk>());
+		auto bHasEldenParryPerk2 = a_defender->HasPerk(RE::BGSPerk::LookupByEditorID(Milf::GetSingleton()->perks.EldenParry_Perk2)->As<RE::BGSPerk>());
+		auto bHasEldenParryPerk1 = a_defender->HasPerk(RE::BGSPerk::LookupByEditorID(Milf::GetSingleton()->perks.EldenParry_Perk1)->As<RE::BGSPerk>());
 		if (bHasEldenParryPerk2 || bHasEldenParryPerk1) {
 			RE::MagicItem* eldenArmorSpell = nullptr;
 			if (bHasEldenParryPerk2 == true) {
-				eldenArmorSpell = RE::TESForm::LookupByEditorID<RE::MagicItem>("ORD_Bck_TimedBlock_Spell_Proc_2");
+				eldenArmorSpell = RE::TESForm::LookupByEditorID<RE::MagicItem>(Milf::GetSingleton()->perks.EldenParry_Spell2);
 			} else if (bHasEldenParryPerk1) {
-				eldenArmorSpell = RE::TESForm::LookupByEditorID<RE::MagicItem>("ORD_Bck_TimedBlock_Spell_Proc");
+				eldenArmorSpell = RE::TESForm::LookupByEditorID<RE::MagicItem>(Milf::GetSingleton()->perks.EldenParry_Spell1);
 			}
 			caster->CastSpellImmediate(eldenArmorSpell, true, a_defender, 1, false, 45, a_defender);
 		}
-		auto bHasDragonsTail = a_defender->HasPerk(RE::BGSPerk::LookupByEditorID("ORD_Bck60_DragonTail_Perk_60_OrdASISExclude")->As<RE::BGSPerk>());
-		auto bHasDeliverance = a_defender->HasPerk(RE::BGSPerk::LookupByEditorID("ORD_Bck90_Deliverance_Perk_90_OrdASISExclude")->As<RE::BGSPerk>());
+		auto bHasDragonsTail = a_defender->HasPerk(RE::BGSPerk::LookupByEditorID(Milf::GetSingleton()->perks.DragonsTail_Perk)->As<RE::BGSPerk>());
+		auto bHasDeliverance = a_defender->HasPerk(RE::BGSPerk::LookupByEditorID(Milf::GetSingleton()->perks.Deliverance_Perk)->As<RE::BGSPerk>());
 		auto bDefenderHasShield = isEquippedShield(a_defender);
 		auto defender_weaponType = UGetAttackWeapon(a_defender->GetActorRuntimeData().currentProcess);
 
