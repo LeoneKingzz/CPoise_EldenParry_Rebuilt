@@ -74,10 +74,10 @@ float EldenParry::calculateRiposteReflex(RE::Actor *a_actor) {
 	auto bHasQuickReflexes = a_actor->HasPerk(RE::BGSPerk::LookupByEditorID(Milf::GetSingleton()->perks.QuickReflexes_Perk)->As<RE::BGSPerk>());
 	auto bDefenderHasShield = Utils::isEquippedShield(a_actor);
 	float a_value = 0.0f;
-	if (bDefenderHasShield == false) {
+	if (!bDefenderHasShield) {
 		a_value += 0.1f;
 	}
-	if (bHasQuickReflexes == false) {
+	if (!bHasQuickReflexes) {
 		a_value += 0.1f;
 	}
 	return a_value;

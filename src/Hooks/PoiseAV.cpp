@@ -127,7 +127,7 @@ void PoiseAV::Update(RE::Actor* a_actor, [[maybe_unused]] float a_delta)
 				PoiseAVHUD::trueHUDInterface->RevertSpecialBarColor(a_actor->GetHandle(), TRUEHUD_API::BarColorType::BarColor);
 		}
 
-		auto                               avManager = AVManager::GetSingleton();
+		auto avManager = AVManager::GetSingleton();
 		std::lock_guard<std::shared_mutex> lk(avManager->mtx);
 		if (avManager->GetActorValue(g_avName, a_actor) == 0.0f) {
 			if (a_actor->AsActorState()->actorState2.staggered) {
