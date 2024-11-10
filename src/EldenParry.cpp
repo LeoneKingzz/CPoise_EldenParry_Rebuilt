@@ -590,18 +590,18 @@ void Milf::Perks::Load(CSimpleIniA& a_ini)
 {
 	static const char* section = "Perks";
 
-	detail::get_value(a_ini, EldenParry_Perk1, section, "EldenParry_Perk1",
+	EldenParry_Perk1 = detail::get_value(a_ini, EldenParry_Perk1, section, "EldenParry_Perk1",
 		";EDID of the Elden parry Perk - 1st Level");
-	detail::get_value(a_ini, EldenParry_Perk2, section, "EldenParry_Perk2",
+	EldenParry_Perk2 = detail::get_value(a_ini, EldenParry_Perk2, section, "EldenParry_Perk2",
 		";EDID of the Elden parry Perk - 2nd Level");
-	detail::get_value(a_ini, EldenParry_Spell1, section, "EldenParry_Spell1",
+	EldenParry_Spell1 = detail::get_value(a_ini, EldenParry_Spell1, section, "EldenParry_Spell1",
 		";EDID of the Elden parry buff - 1st Level");
-	detail::get_value(a_ini, EldenParry_Spell2, section, "EldenParry_Spell2",
+	EldenParry_Spell2 = detail::get_value(a_ini, EldenParry_Spell2, section, "EldenParry_Spell2",
 		";EDID of the Elden parry buff - 2nd Level");
-	detail::get_value(a_ini, QuickReflexes_Perk, section, "QuickReflexes_Perk",
+	QuickReflexes_Perk = detail::get_value(a_ini, QuickReflexes_Perk, section, "QuickReflexes_Perk",
 		";EDID of the Quick Reflexes Perk");
-	detail::get_value(a_ini, DragonsTail_Perk, section, "DragonsTail_Perk",
+	DragonsTail_Perk = detail::get_value(a_ini, DragonsTail_Perk, section, "DragonsTail_Perk",
 		";EDID of the Dragon's Tail Perk");
-	detail::get_value(a_ini, Deliverance_Perk, section, "Deliverance_Perk",
+	Deliverance_Perk = detail::get_value(a_ini, Deliverance_Perk, section, "Deliverance_Perk",
 		";EDID of the Deliverance Perk");
 }
