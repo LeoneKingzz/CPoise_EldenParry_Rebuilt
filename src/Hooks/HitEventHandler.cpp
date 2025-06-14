@@ -115,12 +115,18 @@ float HitEventHandler::RecalculateStagger(RE::Actor* target, RE::Actor* aggresso
 	stagger *= hitData->totalDamage / hitData->physicalDamage;
 	stagger = stagger * min(1 - (target->GetActorRuntimeData().armorRating * 0.12f + target->GetActorRuntimeData().armorBaseFactorSum) / 100.0f, 0.8f);
 
-
-	if (hitData->flags.all(RE::HitData::Flag::kBlocked)) {
-		if (stagger > 0.00) {
+	if (stagger > 0.00) {
+		if (hitData->flags.all(RE::HitData::Flag::kBlocked)) {
+			bool weaponblock = hitData->flags.all(RE::HitData::Flag::kBlockWithWeapon);
 			auto block_score = static_cast<uint32_t>(1.0f - (target->AsActorValueOwner()->GetActorValue(RE::ActorValue::kBlock) / 100.0f));
-			if (block_score < 0.2) {
-				block_score = 0.2;
+			if (weaponblock) {
+				if (block_score < 0.35) {
+					block_score = 0.35;
+				}
+			}else{
+				if (block_score < 0.20) {
+					block_score = 0.20;
+				}
 			}
 			stagger *= block_score;
 		}
