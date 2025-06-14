@@ -117,8 +117,11 @@ float HitEventHandler::RecalculateStagger(RE::Actor* target, RE::Actor* aggresso
 
 
 	if (hitData->flags.all(RE::HitData::Flag::kBlocked)) {
-		if (hitData->stagger > 0.00) {
+		if (stagger > 0.00) {
 			auto block_score = static_cast<uint32_t>(1.0f - (target->AsActorValueOwner()->GetActorValue(RE::ActorValue::kBlock) / 100.0f));
+			if (block_score < 0.35) {
+				block_score = 0.35;
+			}
 			stagger *= block_score;
 		}
 	}
