@@ -113,7 +113,15 @@ float HitEventHandler::RecalculateStagger(RE::Actor* target, RE::Actor* aggresso
 	stagger *= baseMult;
 	if (hitData->totalDamage && hitData->physicalDamage)
 	stagger *= hitData->totalDamage / hitData->physicalDamage;
-	stagger = stagger * min(1 - (target->GetActorRuntimeData().armorRating * 0.12f + target->GetActorRuntimeData().armorBaseFactorSum) / 100.0f, 0.8f); 
+	stagger = stagger * min(1 - (target->GetActorRuntimeData().armorRating * 0.12f + target->GetActorRuntimeData().armorBaseFactorSum) / 100.0f, 0.8f);
+
+
+	if (hitData->flags.all(RE::HitData::Flag::kBlocked)) {
+		if (hitData->stagger > 0.00) {
+			auto block_score = static_cast<uint32_t>(1.0f - (target->AsActorValueOwner()->GetActorValue(RE::ActorValue::kBlock) / 100.0f));
+			stagger *= block_score;
+		}
+	}
 
 	return stagger;
 }
@@ -139,16 +147,7 @@ void HitEventHandler::PreProcessHit(RE::Actor* target, RE::HitData* hitData)
 		// auto poiseDamage = RecalculateStagger(target, aggressor, hitData);
 		// poiseAV->DamageAndCheckPoise(target, aggressor, poiseDamage);
 	}
-	if (hitData->flags.all(RE::HitData::Flag::kBlocked)) {
-		if (hitData->stagger > 0.00) {
-			auto block_score = static_cast<uint32_t>(1.0f - (target->AsActorValueOwner()->GetActorValue(RE::ActorValue::kBlock) / 100.0f));
-			hitData->stagger *= block_score;
-		}
-
-	}else{
-		hitData->stagger = static_cast<uint32_t>(0.00);
-	}
-	
+	hitData->stagger = static_cast<uint32_t>(0.00);
 }
 
 // void HitEventHandler::PoiseCallback_Post(const PRECISION_API::PrecisionHitData& a_precisionHitData, const RE::HitData& hitData)
