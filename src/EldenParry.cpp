@@ -604,4 +604,22 @@ void Milf::Perks::Load(CSimpleIniA& a_ini)
 		";EDID of the Dragon's Tail Perk");
 	Deliverance_Perk = detail::get_value(a_ini, Deliverance_Perk, section, "Deliverance_Perk",
 		";EDID of the Deliverance Perk");
+
+	auto DS = GetSingleton();
+
+	DS->perks.EldenParry_Perk1 = a_ini.GetValue(section, "EldenParry_Perk1", DS->perks.EldenParry_Perk1.c_str());
+	DS->perks.EldenParry_Perk2 = a_ini.GetValue(section, "EldenParry_Perk2", DS->perks.EldenParry_Perk2.c_str());
+	DS->perks.EldenParry_Spell1 = a_ini.GetValue(section, "EldenParry_Spell1", DS->perks.EldenParry_Spell1.c_str());
+	DS->perks.EldenParry_Spell2 = a_ini.GetValue(section, "EldenParry_Spell2", DS->perks.EldenParry_Spell2.c_str());
+	DS->perks.QuickReflexes_Perk = a_ini.GetValue(section, "QuickReflexes_Perk", DS->perks.QuickReflexes_Perk.c_str());
+	DS->perks.DragonsTail_Perk = a_ini.GetValue(section, "DragonsTail_Perk", DS->perks.DragonsTail_Perk.c_str());
+	DS->perks.Deliverance_Perk = a_ini.GetValue(section, "Deliverance_Perk", DS->perks.Deliverance_Perk.c_str());
+
+	a_ini.SetValue(section, "EldenParry_Perk1", DS->perks.EldenParry_Perk1.c_str(), ";EDID of the Elden parry Perk - 1st Level");
+	a_ini.SetValue(section, "EldenParry_Perk2", DS->perks.EldenParry_Perk2.c_str(), ";EDID of the Elden parry Perk - 2nd Level");
+	a_ini.SetValue(section, "EldenParry_Spell1", DS->perks.EldenParry_Spell1.c_str(), ";EDID of the Elden parry buff - 1st Level");
+	a_ini.SetValue(section, "EldenParry_Spell2", DS->perks.EldenParry_Spell2.c_str(), ";EDID of the Elden parry buff - 2nd Level");
+	a_ini.SetValue(section, "QuickReflexes_Perk", DS->perks.QuickReflexes_Perk.c_str(), ";EDID of the Quick Reflexes Perk");
+	a_ini.SetValue(section, "DragonsTail_Perk", DS->perks.DragonsTail_Perk.c_str(), ";EDID of the Dragon's Tail Perk");
+	a_ini.SetValue(section, "Deliverance_Perk", DS->perks.Deliverance_Perk.c_str(), ";EDID of the Deliverance Perk");
 }
