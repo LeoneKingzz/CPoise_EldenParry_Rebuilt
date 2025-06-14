@@ -139,7 +139,16 @@ void HitEventHandler::PreProcessHit(RE::Actor* target, RE::HitData* hitData)
 		// auto poiseDamage = RecalculateStagger(target, aggressor, hitData);
 		// poiseAV->DamageAndCheckPoise(target, aggressor, poiseDamage);
 	}
-	hitData->stagger = static_cast<uint32_t>(0.00);
+	if (hitData->flags.all(RE::HitData::Flag::kBlocked)) {
+		if (hitData->stagger > 0.00) {
+			auto block_score = static_cast<uint32_t>(1.0f - (target->AsActorValueOwner()->GetActorValue(RE::ActorValue::kBlock) / 100.0f));
+			hitData->stagger *= block_score;
+		}
+
+	}else{
+		hitData->stagger = static_cast<uint32_t>(0.00);
+	}
+	
 }
 
 // void HitEventHandler::PoiseCallback_Post(const PRECISION_API::PrecisionHitData& a_precisionHitData, const RE::HitData& hitData)
