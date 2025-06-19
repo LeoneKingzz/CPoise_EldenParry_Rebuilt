@@ -55,9 +55,9 @@ float HitEventHandler::GetMiscDamage()
 }
 
 float HitEventHandler::ModActorBashMult(RE::Actor* aggressor) {
-	auto bHasSkullrattler = aggressor->HasPerk(RE::BGSPerk::LookupByEditorID("ORD_Bck50_SkullRattler_Perk_50_WasDeadlyBash")->As<RE::BGSPerk>());
+	auto  bHasSkullrattler = aggressor->HasPerk(RE::BGSPerk::LookupByEditorID(Milf::GetSingleton()->perks.SkullRattler_Perk)->As<RE::BGSPerk>());
 	float a_value = 0.0f;
-	if (bHasSkullrattler == true) {
+	if (bHasSkullrattler) {
 		a_value = 0.001f;
 	}
 	return a_value;

@@ -1,5 +1,5 @@
 #pragma once
-// #include "EldenParry.h"
+#include "EldenParry.h"
 // #include "lib/PrecisionAPI.h"
 
 class HitEventHandler

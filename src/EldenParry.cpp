@@ -599,6 +599,7 @@ void Milf::Perks::Load(CSimpleIniA& a_ini)
 	DS->perks.QuickReflexes_Perk = a_ini.GetValue(section, "QuickReflexes_Perk", DS->perks.QuickReflexes_Perk.c_str());
 	DS->perks.DragonsTail_Perk = a_ini.GetValue(section, "DragonsTail_Perk", DS->perks.DragonsTail_Perk.c_str());
 	DS->perks.Deliverance_Perk = a_ini.GetValue(section, "Deliverance_Perk", DS->perks.Deliverance_Perk.c_str());
+	DS->perks.SkullRattler_Perk = a_ini.GetValue(section, "SkullRattler_Perk", DS->perks.SkullRattler_Perk.c_str());
 
 	a_ini.SetValue(section, "EldenParry_Perk1", DS->perks.EldenParry_Perk1.c_str(), ";EDID of the Elden parry Perk - 1st Level");
 	a_ini.SetValue(section, "EldenParry_Perk2", DS->perks.EldenParry_Perk2.c_str(), ";EDID of the Elden parry Perk - 2nd Level");
@@ -607,4 +608,5 @@ void Milf::Perks::Load(CSimpleIniA& a_ini)
 	a_ini.SetValue(section, "QuickReflexes_Perk", DS->perks.QuickReflexes_Perk.c_str(), ";EDID of the Quick Reflexes Perk");
 	a_ini.SetValue(section, "DragonsTail_Perk", DS->perks.DragonsTail_Perk.c_str(), ";EDID of the Dragon's Tail Perk");
 	a_ini.SetValue(section, "Deliverance_Perk", DS->perks.Deliverance_Perk.c_str(), ";EDID of the Deliverance Perk");
+	a_ini.SetValue(section, "SkullRattler_Perk", DS->perks.SkullRattler_Perk.c_str(), ";EDID of the Skull Rattler Perk");
 }
