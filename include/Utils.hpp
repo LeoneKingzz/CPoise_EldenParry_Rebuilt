@@ -182,7 +182,7 @@ public:
 		auto bHasDragonsTail = a_defender->HasPerk(RE::BGSPerk::LookupByEditorID(Milf::GetSingleton()->perks.DragonsTail_Perk)->As<RE::BGSPerk>());
 		auto bHasDeliverance = a_defender->HasPerk(RE::BGSPerk::LookupByEditorID(Milf::GetSingleton()->perks.Deliverance_Perk)->As<RE::BGSPerk>());
 		auto bDefenderHasShield = isEquippedShield(a_defender);
-		auto defender_weaponType = UGetAttackWeapon(a_defender->GetActorRuntimeData().currentProcess);
+		auto defender_weaponType = UGetAttackWeapon(a_defender);
 
 		// auto aggressor_weaponType = UGetAttackWeapon(a_aggressor->GetActorRuntimeData().currentProcess);
 		auto weaponAI = a_aggressor->GetActorRuntimeData().currentProcess;
@@ -1159,14 +1159,24 @@ public:
 		return bodyPartData && bodyPartData->GetFormID() == 0x1d;
 	}
 
-	static const RE::TESObjectWEAP* UGetAttackWeapon(RE::AIProcess* const aiProcess)
+	static RE::TESObjectWEAP* UGetAttackWeapon(RE::Actor* a_actor)
 	{
-		if (aiProcess && aiProcess->high && aiProcess->high->attackData) {
-			const RE::TESForm* equipped = aiProcess->high->attackData.get()->IsLeftAttack() ? aiProcess->GetEquippedLeftHand() : aiProcess->GetEquippedRightHand();
-			return equipped->As<RE::TESObjectWEAP>();
-		}else{
-			return nullptr;
+		RE::TESObjectWEAP* weapon = nullptr;
+
+		if (auto aiProcess = a_actor->GetActorRuntimeData().currentProcess; aiProcess) {
+
+			if (aiProcess->high && aiProcess->high->attackData && aiProcess->high->attackData.get()) {
+
+				auto equipped = aiProcess->high->attackData.get()->IsLeftAttack() ? aiProcess->GetEquippedLeftHand() : aiProcess->GetEquippedRightHand();
+
+				if(equipped && equipped->Is(RE::FormType::Weapon)){
+					
+					weapon =  equipped->As<RE::TESObjectWEAP>();
+				}
+				
+			}
 		}
+		return weapon;
 	}
 
 	static void resetProjectileOwner(RE::Projectile* a_projectile, RE::Actor* a_actor, RE::hkpCollidable* a_projectile_collidable)
