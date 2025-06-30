@@ -58,7 +58,7 @@ float HitEventHandler::ModActorBashMult(RE::Actor* aggressor) {
 	
 	float a_value = 0.0f;
 
-	if (const auto perk = RE::BGSPerk::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.SkullRattler_Perk); perk) {
+	if (const auto perk = RE::TESForm::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.SkullRattler_Perk); perk) {
 		if (aggressor->HasPerk(perk)) {
 			a_value = 0.001f;
 		}

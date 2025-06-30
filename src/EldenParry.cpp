@@ -72,11 +72,11 @@ void EldenParry::update() {
 
 float EldenParry::calculateRiposteReflex(RE::Actor *a_actor) {
 	float a_value = 0.0f;
-	
+
 	if (!Utils::isEquippedShield(a_actor)) {
 		a_value += 0.1f;
 	}
-	if (const auto perk = RE::BGSPerk::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.QuickReflexes_Perk); perk) {
+	if (const auto perk = RE::TESForm::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.QuickReflexes_Perk); perk) {
 		if(!a_actor->HasPerk(perk)){
 			a_value += 0.1f;
 		}
