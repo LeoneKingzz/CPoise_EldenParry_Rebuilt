@@ -168,19 +168,46 @@ public:
 	{
 		const auto caster = a_defender->GetMagicCaster(RE::MagicSystem::CastingSource::kInstant);
 		float a_reprisal = (EldenParry::GetSingleton()->AttackerBeatsParry(a_aggressor, a_defender));
-		auto bHasEldenParryPerk2 = a_defender->HasPerk(RE::BGSPerk::LookupByEditorID(Milf::GetSingleton()->perks.EldenParry_Perk2)->As<RE::BGSPerk>());
-		auto bHasEldenParryPerk1 = a_defender->HasPerk(RE::BGSPerk::LookupByEditorID(Milf::GetSingleton()->perks.EldenParry_Perk1)->As<RE::BGSPerk>());
+
+		auto bHasEldenParryPerk2 = false;
+		auto bHasEldenParryPerk1 = false;
+		auto bHasDragonsTail = false;
+		auto bHasDeliverance = false;
+
+		if (const auto perk = RE::BGSPerk::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.EldenParry_Perk2); perk) {
+			bHasEldenParryPerk2 = a_defender->HasPerk(perk);
+		}
+		if (const auto perk = RE::BGSPerk::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.EldenParry_Perk1); perk) {
+			bHasEldenParryPerk1 = a_defender->HasPerk(perk);
+		}
+
+		if (const auto perk = RE::BGSPerk::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.DragonsTail_Perk); perk) {
+			bHasDragonsTail = a_defender->HasPerk(perk);
+		}
+
+		if (const auto perk = RE::BGSPerk::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.Deliverance_Perk); perk) {
+			bHasDeliverance = a_defender->HasPerk(perk);
+		}
+
 		if (bHasEldenParryPerk2 || bHasEldenParryPerk1) {
 			RE::MagicItem* eldenArmorSpell = nullptr;
-			if (bHasEldenParryPerk2 == true) {
-				eldenArmorSpell = RE::TESForm::LookupByEditorID<RE::MagicItem>(Milf::GetSingleton()->perks.EldenParry_Spell2);
+
+			if (bHasEldenParryPerk2) {
+				if (const auto spell = RE::BGSPerk::LookupByEditorID<RE::MagicItem>(Milf::GetSingleton()->perks.EldenParry_Spell2); spell) {
+					eldenArmorSpell = spell;
+				}
+
 			} else if (bHasEldenParryPerk1) {
-				eldenArmorSpell = RE::TESForm::LookupByEditorID<RE::MagicItem>(Milf::GetSingleton()->perks.EldenParry_Spell1);
+				if (const auto spell = RE::BGSPerk::LookupByEditorID<RE::MagicItem>(Milf::GetSingleton()->perks.EldenParry_Spell1); spell) {
+					eldenArmorSpell = spell;
+				}
 			}
-			caster->CastSpellImmediate(eldenArmorSpell, true, a_defender, 1, false, 45, a_defender);
+			
+			if (eldenArmorSpell && (bHasEldenParryPerk2 || bHasEldenParryPerk1)) {
+				caster->CastSpellImmediate(eldenArmorSpell, true, a_defender, 1, false, 45, a_defender);
+			}
 		}
-		auto bHasDragonsTail = a_defender->HasPerk(RE::BGSPerk::LookupByEditorID(Milf::GetSingleton()->perks.DragonsTail_Perk)->As<RE::BGSPerk>());
-		auto bHasDeliverance = a_defender->HasPerk(RE::BGSPerk::LookupByEditorID(Milf::GetSingleton()->perks.Deliverance_Perk)->As<RE::BGSPerk>());
+		
 		auto bDefenderHasShield = isEquippedShield(a_defender);
 		auto defender_weaponType = UGetAttackWeapon(a_defender);
 
