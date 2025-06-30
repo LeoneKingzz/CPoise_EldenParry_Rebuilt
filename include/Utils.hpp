@@ -174,18 +174,18 @@ public:
 		auto bHasDragonsTail = false;
 		auto bHasDeliverance = false;
 
-		if (const auto perk = RE::BGSPerk::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.EldenParry_Perk2); perk) {
+		if (const auto perk = RE::TESForm::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.EldenParry_Perk2); perk) {
 			bHasEldenParryPerk2 = a_defender->HasPerk(perk);
 		}
-		if (const auto perk = RE::BGSPerk::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.EldenParry_Perk1); perk) {
+		if (const auto perk = RE::TESForm::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.EldenParry_Perk1); perk) {
 			bHasEldenParryPerk1 = a_defender->HasPerk(perk);
 		}
 
-		if (const auto perk = RE::BGSPerk::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.DragonsTail_Perk); perk) {
+		if (const auto perk = RE::TESForm::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.DragonsTail_Perk); perk) {
 			bHasDragonsTail = a_defender->HasPerk(perk);
 		}
 
-		if (const auto perk = RE::BGSPerk::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.Deliverance_Perk); perk) {
+		if (const auto perk = RE::TESForm::LookupByEditorID<RE::BGSPerk>(Milf::GetSingleton()->perks.Deliverance_Perk); perk) {
 			bHasDeliverance = a_defender->HasPerk(perk);
 		}
 
@@ -193,16 +193,16 @@ public:
 			RE::MagicItem* eldenArmorSpell = nullptr;
 
 			if (bHasEldenParryPerk2) {
-				if (const auto spell = RE::BGSPerk::LookupByEditorID<RE::MagicItem>(Milf::GetSingleton()->perks.EldenParry_Spell2); spell) {
+				if (const auto spell = RE::TESForm::LookupByEditorID<RE::MagicItem>(Milf::GetSingleton()->perks.EldenParry_Spell2); spell) {
 					eldenArmorSpell = spell;
 				}
 
 			} else if (bHasEldenParryPerk1) {
-				if (const auto spell = RE::BGSPerk::LookupByEditorID<RE::MagicItem>(Milf::GetSingleton()->perks.EldenParry_Spell1); spell) {
+				if (const auto spell = RE::TESForm::LookupByEditorID<RE::MagicItem>(Milf::GetSingleton()->perks.EldenParry_Spell1); spell) {
 					eldenArmorSpell = spell;
 				}
 			}
-			
+
 			if (eldenArmorSpell && (bHasEldenParryPerk2 || bHasEldenParryPerk1)) {
 				caster->CastSpellImmediate(eldenArmorSpell, true, a_defender, 1, false, 45, a_defender);
 			}
