@@ -32,7 +32,6 @@ public:
 	void  DamageActorValue(std::string a_actorValue, RE::Actor* a_actor, float a_damage);
 	void  RestoreActorValue(std::string a_actorValue, RE::Actor* a_actor, float a_restore)
 	{
-		//DamageActorValue(a_actorValue, a_actor, a_restore);
 		DamageActorValue(a_actorValue, a_actor, -a_restore);
 	}
 	float GetActorValue(std::string a_actorValue, RE::Actor* a_actor);
