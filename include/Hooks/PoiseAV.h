@@ -114,12 +114,27 @@ public:
 		a_target->SetGraphVariableBool("bPoise_IsStaggered", true);
 		GetSingleton()->appliedStagger = true;
 		GetSingleton()->staggerThread = std::this_thread::get_id();
-		using func_t = decltype(&TryStagger);
-		REL::Relocation<func_t> func{ REL::RelocationID(36700, 37710) };
-		func(a_target, a_staggerMult, a_aggressor);
-		// if (a_target->GetGraphVariableBool("bKaputt_IsInKillMove", bKaputt_IsInKillMove) && !bKaputt_IsInKillMove) {
-		// 	func(a_target, a_staggerMult, a_aggressor);
-		// }
+
+		// using func_t = decltype(&TryStagger);
+		// REL::Relocation<func_t> func{ REL::RelocationID(36700, 37710) };
+		// func(a_target, a_staggerMult, a_aggressor);
+
+		if(a_aggressor){
+			auto headingAngle = a_target->GetHeadingAngle(a_aggressor->GetPosition(), false);
+			auto direction = (headingAngle >= 0.0f) ? headingAngle / 360.0f : (360.0f + headingAngle) / 360.0f;
+			a_target->SetGraphVariableFloat("staggerDirection", direction);
+		}
+
+		a_target->SetGraphVariableFloat("staggerMagnitude", a_staggerMult);
+
+		a_target->NotifyAnimationGraph("staggerStart");
+	}
+
+	static bool GetBoolVariable(RE::Actor *a_actor, std::string a_string)
+	{
+		auto result = false;
+		a_actor->GetGraphVariableBool(a_string, result);
+		return result;
 	}
 
 
