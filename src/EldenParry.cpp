@@ -130,7 +130,7 @@ bool EldenParry::inParryState(RE::Actor* a_actor)
 
 bool EldenParry::canParry(RE::Actor* a_parrier, RE::TESObjectREFR* a_obj)
 {
-	logger::info("{}",a_parrier->GetName());
+	//logger::info("{}",a_parrier->GetName());
 	return inParryState(a_parrier) && inBlockAngle(a_parrier, a_obj);
 }
 
@@ -278,7 +278,7 @@ void EldenParry::send_melee_parry_event(RE::Actor* a_attacker) {
 	};
 
 	SKSE::GetModCallbackEventSource()->SendEvent(&modEvent);
-	logger::info("Sent melee parry event");
+	//logger::info("Sent melee parry event");
 }
 
 
@@ -291,7 +291,7 @@ void EldenParry::send_ranged_parry_event() {
 	};
 
 	SKSE::GetModCallbackEventSource()->SendEvent(&modEvent);
-	logger::info("Sent ranged parry event");
+	//logger::info("Sent ranged parry event");
 }
 
 PRECISION_API::PreHitCallbackReturn EldenParry::precisionPrehitCallbackFunc(const PRECISION_API::PrecisionHitData& a_precisionHitData) {

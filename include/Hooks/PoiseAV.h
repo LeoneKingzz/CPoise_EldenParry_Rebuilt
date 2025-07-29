@@ -128,6 +128,13 @@ public:
 		// a_target->SetGraphVariableFloat("staggerMagnitude", a_staggerMult);
 
 		// a_target->NotifyAnimationGraph("staggerStart");
+
+		if(a_aggressor){
+			logger::info(" Stagger function triggered. Victim: {}  Aggressor: {}", a_target->GetName(), a_aggressor->GetName());
+
+		}else{
+			logger::info(" Stagger function triggered. Victim {}", a_target->GetName());
+		}
 	}
 
 	static bool GetBoolVariable(RE::Actor *a_actor, std::string a_string)
