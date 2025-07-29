@@ -46,7 +46,8 @@ float PoiseAV::GetBaseActorValue(RE::Actor* a_actor)
 	//	}
 	//}
 
-	return std::clamp(health, 0.0f, FLT_MAX);
+	//return std::clamp(health, 0.0f, FLT_MAX);
+	return std::clamp(health, 0.0f, 3.402823466e+38F);
 }
 
 float PoiseAV::Score_GetBaseActorValue(RE::Actor* a_actor)
