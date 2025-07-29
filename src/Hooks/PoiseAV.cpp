@@ -96,10 +96,6 @@ void PoiseAV::DamageAndCheckPoise(RE::Actor* a_target, RE::Actor* a_aggressor, f
 	auto                               avManager = AVManager::GetSingleton();
 	std::lock_guard<std::shared_mutex> lk(avManager->mtx);
 
-	if(a_poiseDamage < 0){
-		logger::info("DACP Branch. {} poise damage less than zero. value: {} ", a_target->GetName(), a_poiseDamage);
-	}
-
 	if (a_poiseDamage > 0 && a_target != a_aggressor) {
 		a_poiseDamage *= settings->GetDamageMultiplier(a_aggressor, a_target);
 		if (a_target != a_aggressor) {
@@ -110,19 +106,19 @@ void PoiseAV::DamageAndCheckPoise(RE::Actor* a_target, RE::Actor* a_aggressor, f
 		}
 	}
 
-	logger::info("DACP Branch. {} attempting to damage poise. current value: {} ", a_target->GetName(), avManager->GetActorValue(g_avName, a_target));
+	// logger::info("DACP Branch. {} attempting to damage poise. current value: {} ", a_target->GetName(), avManager->GetActorValue(g_avName, a_target));
 
 	avManager->DamageActorValue(g_avName, a_target, a_poiseDamage);
 	
-	logger::info("DACP Branch. {} poise damaged. current value: {} ", a_target->GetName(), avManager->GetActorValue(g_avName, a_target));
+	// logger::info("DACP Branch. {} poise damaged. current value: {} ", a_target->GetName(), avManager->GetActorValue(g_avName, a_target));
 
 	auto poise = avManager->GetActorValue(g_avName, a_target);
 	if (poise == 0.0f) {
-		logger::info("DACP Branch. {} poise is depleted. attemtping stagger. Value: {} ", a_target->GetName(), avManager->GetActorValue(g_avName, a_target));
+		// logger::info("DACP Branch. {} poise is depleted. attemtping stagger. Value: {} ", a_target->GetName(), avManager->GetActorValue(g_avName, a_target));
 		a_target->AddToFaction(ForceFullBodyStagger, 0);
 		auto poiseDamagePercent = a_poiseDamage / avManager->GetActorValueMax(g_avName, a_target);
 
-		logger::info("DACP Branch. {} Poisedamage percent is equal to Stagger Mag: {} ", a_target->GetName(), poiseDamagePercent);
+		// logger::info("DACP Branch. {} Poisedamage percent is equal to Stagger Mag: {} ", a_target->GetName(), poiseDamagePercent);
 
 		// Stagger duration is relative to the power of the attacking weapon
 		logger::debug(FMT_STRING("Poise Damage Percent {}"), poiseDamagePercent);
@@ -141,17 +137,18 @@ void PoiseAV::Update(RE::Actor* a_actor, [[maybe_unused]] float a_delta)
 	if (a_actor->GetActorRuntimeData().currentProcess && a_actor->GetActorRuntimeData().currentProcess->InHighProcess() && a_actor->Is3DLoaded()) {
 		auto settings = Settings::GetSingleton();
 
-		//logger::info("Recieved update event for {} ", a_actor->GetName());
 
 		if (PoiseAVHUD::trueHUDInterface && settings->TrueHUD.SpecialBar) {
 			if (!CanDamageActor(a_actor)){
+
 				PoiseAVHUD::trueHUDInterface->OverrideSpecialBarColor(a_actor->GetHandle(), TRUEHUD_API::BarColorType::BarColor, 0x808080);
-				logger::info("Update hook active. {} is staggered. Overridding poise bar ", a_actor->GetName());
+
+				// logger::info("Update hook active. {} is staggered. Overridding poise bar ", a_actor->GetName());
 
 			} else{
 
 				PoiseAVHUD::trueHUDInterface->RevertSpecialBarColor(a_actor->GetHandle(), TRUEHUD_API::BarColorType::BarColor);
-				//logger::info("{} Reverting poise poise bar ", a_actor->GetName());
+
 			}
 				
 		}
@@ -159,22 +156,22 @@ void PoiseAV::Update(RE::Actor* a_actor, [[maybe_unused]] float a_delta)
 		auto avManager = AVManager::GetSingleton();
 		std::lock_guard<std::shared_mutex> lk(avManager->mtx);
 		if (avManager->GetActorValue(g_avName, a_actor) == 0.0f) {
-			logger::info("Update Branch. {} poise is depleted. Value: {} ", a_actor->GetName(), avManager->GetActorValue(g_avName, a_actor));
+			// logger::info("Update Branch. {} poise is depleted. Value: {} ", a_actor->GetName(), avManager->GetActorValue(g_avName, a_actor));
 
 			if (a_actor->AsActorState()->actorState2.staggered) {
-				logger::info("Update Branch. {} isStaggered. Restoring Max Poise ", a_actor->GetName());
-				//avManager->RestoreActorValue(g_avName, a_actor, FLT_MAX);
+				// logger::info("Update Branch. {} isStaggered. Restoring Max Poise ", a_actor->GetName());
+
 				avManager->RestoreActorValue(g_avName, a_actor, avManager->GetActorValueMax(g_avName, a_actor));
 
-				logger::info("Update Branch. {} Current Poise: {:.2f} ", a_actor->GetName(), avManager->GetActorValue(g_avName, a_actor));
+				// logger::info("Update Branch. {} Current Poise: {:.2f} ", a_actor->GetName(), avManager->GetActorValue(g_avName, a_actor));
 
 				if (PoiseAVHUD::trueHUDInterface && settings->TrueHUD.SpecialBar) {
 					PoiseAVHUD::trueHUDInterface->FlashActorSpecialBar(SKSE::GetPluginHandle(), a_actor->GetHandle(), true);
-					logger::info("Update Branch. {} flashing HUD Bar due to depleted poise ", a_actor->GetName());
+					// logger::info("Update Branch. {} flashing HUD Bar due to depleted poise ", a_actor->GetName());
 				}
 				RemoveFromFaction(a_actor, ForceFullBodyStagger);
 			} else {
-				logger::info("Update Branch. {} isnot Staggered. Attempting stagger", a_actor->GetName());
+				// logger::info("Update Branch. {} isnot Staggered. Attempting stagger", a_actor->GetName());
 				
 				if (!GetBoolVariable(a_actor, "bKaputt_IsInKillMove")) {
 
@@ -185,7 +182,7 @@ void PoiseAV::Update(RE::Actor* a_actor, [[maybe_unused]] float a_delta)
 			}
 		} else {
 			avManager->RestoreActorValue(g_avName, a_actor, avManager->GetActorValueMax(g_avName, a_actor) * settings->Health.RegenRate * a_delta);
-			logger::info("Update Branch. {} poise not depleted. Restoring poise : {} ", a_actor->GetName(), avManager->GetActorValueMax(g_avName, a_actor) * settings->Health.RegenRate * a_delta);
+			// logger::info("Update Branch. {} poise not depleted. Restoring poise : {} ", a_actor->GetName(), avManager->GetActorValueMax(g_avName, a_actor) * settings->Health.RegenRate * a_delta);
 		}
 	}
 }

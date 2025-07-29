@@ -109,6 +109,18 @@ public:
 	//	a_target->actorState2.staggered = true;
 	//}
 
+
+	// if(a_aggressor){
+	// 	auto headingAngle = a_target->GetHeadingAngle(a_aggressor->GetPosition(), false);
+	// 	auto direction = (headingAngle >= 0.0f) ? headingAngle / 360.0f : (360.0f + headingAngle) / 360.0f;
+	// 	a_target->SetGraphVariableFloat("staggerDirection", direction);
+	// }
+
+	// a_target->SetGraphVariableFloat("staggerMagnitude", a_staggerMult);
+
+	// a_target->NotifyAnimationGraph("staggerStart");
+	
+
 	static void TryStagger(RE::Actor* a_target, float a_staggerMult, RE::Actor* a_aggressor)
 	{
 		a_target->SetGraphVariableBool("bPoise_IsStaggered", true);
@@ -119,22 +131,14 @@ public:
 		REL::Relocation<func_t> func{ REL::RelocationID(36700, 37710) };
 		func(a_target, a_staggerMult, a_aggressor);
 
+		
+
 		// if(a_aggressor){
-		// 	auto headingAngle = a_target->GetHeadingAngle(a_aggressor->GetPosition(), false);
-		// 	auto direction = (headingAngle >= 0.0f) ? headingAngle / 360.0f : (360.0f + headingAngle) / 360.0f;
-		// 	a_target->SetGraphVariableFloat("staggerDirection", direction);
+		// 	logger::info(" Stagger function triggered. Victim: {}  Aggressor: {}", a_target->GetName(), a_aggressor->GetName());
+
+		// }else{
+		// 	logger::info(" Stagger function triggered. Victim {}", a_target->GetName());
 		// }
-
-		// a_target->SetGraphVariableFloat("staggerMagnitude", a_staggerMult);
-
-		// a_target->NotifyAnimationGraph("staggerStart");
-
-		if(a_aggressor){
-			logger::info(" Stagger function triggered. Victim: {}  Aggressor: {}", a_target->GetName(), a_aggressor->GetName());
-
-		}else{
-			logger::info(" Stagger function triggered. Victim {}", a_target->GetName());
-		}
 	}
 
 	static bool GetBoolVariable(RE::Actor *a_actor, std::string a_string)
