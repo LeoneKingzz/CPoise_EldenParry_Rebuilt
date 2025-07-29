@@ -12,8 +12,8 @@ bool PoiseAV::CanDamageActor(RE::Actor* a_actor)
 		case 0:
 			return true;
 		case 1:
-		    return !GetBoolVariable(a_actor, "IsStaggering");
-			// return !a_actor->AsActorState()->actorState2.staggered;
+		    // return !GetBoolVariable(a_actor, "IsStaggering");
+			return !a_actor->AsActorState()->actorState2.staggered;
 		}
 	}
 	return false;
@@ -131,7 +131,7 @@ void PoiseAV::Update(RE::Actor* a_actor, [[maybe_unused]] float a_delta)
 		auto avManager = AVManager::GetSingleton();
 		std::lock_guard<std::shared_mutex> lk(avManager->mtx);
 		if (avManager->GetActorValue(g_avName, a_actor) == 0.0f) {
-			if (GetBoolVariable(a_actor, "IsStaggering")) {
+			if (a_actor->AsActorState()->actorState2.staggered) {
 				avManager->RestoreActorValue(g_avName, a_actor, FLT_MAX);
 				if (PoiseAVHUD::trueHUDInterface && settings->TrueHUD.SpecialBar) {
 					PoiseAVHUD::trueHUDInterface->FlashActorSpecialBar(SKSE::GetPluginHandle(), a_actor->GetHandle(), true);
