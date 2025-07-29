@@ -91,8 +91,7 @@ void PoiseAV::DamageAndCheckPoise(RE::Actor* a_target, RE::Actor* a_aggressor, f
 	std::lock_guard<std::shared_mutex> lk(avManager->mtx);
 
 	if(a_poiseDamage < 0){
-		logger::info("DACP Branch. {} poise damage less than zero. setting to zero. value: {} ", a_target->GetName(), a_poiseDamage);
-		a_poiseDamage = 0;
+		logger::info("DACP Branch. {} poise damage less than zero. value: {} ", a_target->GetName(), a_poiseDamage);
 	}
 
 	if (a_poiseDamage > 0 && a_target != a_aggressor) {
@@ -107,7 +106,7 @@ void PoiseAV::DamageAndCheckPoise(RE::Actor* a_target, RE::Actor* a_aggressor, f
 
 	logger::info("DACP Branch. {} attempting to damage poise. current value: {} ", a_target->GetName(), avManager->GetActorValue(g_avName, a_target));
 
-	avManager->DamageActorValue(g_avName, a_target, -a_poiseDamage);
+	avManager->DamageActorValue(g_avName, a_target, a_poiseDamage);
 	
 	logger::info("DACP Branch. {} poise damaged. current value: {} ", a_target->GetName(), avManager->GetActorValue(g_avName, a_target));
 
@@ -158,7 +157,8 @@ void PoiseAV::Update(RE::Actor* a_actor, [[maybe_unused]] float a_delta)
 
 			if (a_actor->AsActorState()->actorState2.staggered) {
 				logger::info("Update Branch. {} isStaggered. Restoring Max Poise ", a_actor->GetName());
-				avManager->RestoreActorValue(g_avName, a_actor, FLT_MAX);
+				//avManager->RestoreActorValue(g_avName, a_actor, FLT_MAX);
+				avManager->RestoreActorValue(g_avName, a_actor, avManager->GetActorValueMax(g_avName, a_actor));
 				logger::info("Update Branch. {} Current Poise: {:.2f} ", a_actor->GetName(), avManager->GetActorValue(g_avName, a_actor));
 
 				if (PoiseAVHUD::trueHUDInterface && settings->TrueHUD.SpecialBar) {
