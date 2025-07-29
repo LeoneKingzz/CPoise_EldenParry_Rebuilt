@@ -164,8 +164,8 @@ void PoiseAV::Update(RE::Actor* a_actor, [[maybe_unused]] float a_delta)
 			if (a_actor->AsActorState()->actorState2.staggered) {
 				logger::info("Update Branch. {} isStaggered. Restoring Max Poise ", a_actor->GetName());
 				//avManager->RestoreActorValue(g_avName, a_actor, FLT_MAX);
-				avManager->RestoreActorValue(g_avName, a_actor, std::numeric_limits<float>::max());
-				
+				avManager->RestoreActorValue(g_avName, a_actor, avManager->GetActorValueMax(g_avName, a_actor));
+
 				logger::info("Update Branch. {} Current Poise: {:.2f} ", a_actor->GetName(), avManager->GetActorValue(g_avName, a_actor));
 
 				if (PoiseAVHUD::trueHUDInterface && settings->TrueHUD.SpecialBar) {
