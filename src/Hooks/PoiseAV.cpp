@@ -5,6 +5,11 @@
 #include "Storage/Settings.h"
 #include "UI/PoiseAVHUD.h"
 
+
+#undef max
+#include <limits>
+//#undef min
+
 bool PoiseAV::CanDamageActor(RE::Actor* a_actor)
 {
 	if (a_actor && a_actor->GetActorRuntimeData().currentProcess && !a_actor->IsChild()) {
@@ -47,7 +52,7 @@ float PoiseAV::GetBaseActorValue(RE::Actor* a_actor)
 	//}
 
 	//return std::clamp(health, 0.0f, FLT_MAX);
-	return std::clamp(health, 0.0f, 3.402823466e+38F);
+	return std::clamp(health, 0.0f, std::numeric_limits<float>::max());
 }
 
 float PoiseAV::Score_GetBaseActorValue(RE::Actor* a_actor)
