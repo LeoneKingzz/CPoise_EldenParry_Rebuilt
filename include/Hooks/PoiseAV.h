@@ -30,9 +30,16 @@ public:
 	float GetBaseActorValue(RE::Actor* a_actor);
 	float Score_GetBaseActorValue(RE::Actor* a_actor);
 	float GetActorValueMax(RE::Actor* a_actor);
-	void DamageAndCheckPoise(RE::Actor* a_target, RE::Actor* a_aggressor, float a_poiseDamage);
+	void  DamageAndCheckPoise(RE::Actor* a_target, RE::Actor* a_aggressor, float a_poiseDamage, RE::HitData* a_hitData = nullptr);
 	void  Update(RE::Actor* a_actor, float a_delta);
 	void  GarbageCollection();
+
+	void Cast_Spell(RE::Actor* a_actor, std::string a_spell, float a_mag)
+	{
+		if (const auto caster = a_actor->GetMagicCaster(RE::MagicSystem::CastingSource::kInstant); caster) {
+			caster->CastSpellImmediate(RE::TESForm::LookupByEditorID<RE::MagicItem>(a_spell), false, a_actor, 1, false, a_mag, a_actor);
+		}
+	};
 
 	//static void TryPushActorAway(RE::Actor* target, [[maybe_unused]] float staggerMult, RE::Actor* aggressor)
 	//{

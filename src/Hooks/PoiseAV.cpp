@@ -90,19 +90,37 @@ float PoiseAV::GetActorValueMax([[maybe_unused]] RE::Actor* a_actor)
 	return GetBaseActorValue(a_actor);
 }
 
-void PoiseAV::DamageAndCheckPoise(RE::Actor* a_target, RE::Actor* a_aggressor, float a_poiseDamage)
+void PoiseAV::DamageAndCheckPoise(RE::Actor* a_target, RE::Actor* a_aggressor, float a_poiseDamage, [[maybe_unused]] RE::HitData* a_hitData)
 {
 	auto                               settings = Settings::GetSingleton();
 	auto                               avManager = AVManager::GetSingleton();
 	std::lock_guard<std::shared_mutex> lk(avManager->mtx);
 
+	auto poiseDamagePercent = a_poiseDamage / avManager->GetActorValueMax(g_avName, a_target);
+
 	if (a_poiseDamage > 0 && a_target != a_aggressor) {
 		a_poiseDamage *= settings->GetDamageMultiplier(a_aggressor, a_target);
-		if (a_target != a_aggressor) {
-			if (a_target->IsPlayerRef())
-				a_poiseDamage *= settings->Damage.ToPCMult;
-			else
-				a_poiseDamage *= settings->Damage.ToNPCMult;
+
+		if (a_target->IsPlayerRef()) {
+			a_poiseDamage *= settings->Damage.ToPCMult;
+		} else {
+			a_poiseDamage *= settings->Damage.ToNPCMult;
+		}
+
+		if (a_hitData && a_hitData->flags && a_hitData->flags.all(RE::HitData::Flag::kBlocked)) {
+
+			if(poiseDamagePercent >= 0.15 && poiseDamagePercent < 0.3)
+			{
+				Cast_Spell(a_target, "", 0.0f);
+				
+			} else if (poiseDamagePercent >= 0.3 && poiseDamagePercent < 0.5) 
+			{
+				Cast_Spell(a_target, "", 0.0f);
+
+			} else if (poiseDamagePercent >= 0.5) 
+			{
+				Cast_Spell(a_target, "", 0.0f);
+			}
 		}
 	}
 
@@ -116,7 +134,7 @@ void PoiseAV::DamageAndCheckPoise(RE::Actor* a_target, RE::Actor* a_aggressor, f
 	if (poise == 0.0f) {
 		// logger::info("DACP Branch. {} poise is depleted. attemtping stagger. Value: {} ", a_target->GetName(), avManager->GetActorValue(g_avName, a_target));
 		a_target->AddToFaction(ForceFullBodyStagger, 0);
-		auto poiseDamagePercent = a_poiseDamage / avManager->GetActorValueMax(g_avName, a_target);
+		// auto poiseDamagePercent = a_poiseDamage / avManager->GetActorValueMax(g_avName, a_target);
 
 		// logger::info("DACP Branch. {} Poisedamage percent is equal to Stagger Mag: {} ", a_target->GetName(), poiseDamagePercent);
 
