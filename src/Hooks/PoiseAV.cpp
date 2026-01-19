@@ -111,15 +111,15 @@ void PoiseAV::DamageAndCheckPoise(RE::Actor* a_target, RE::Actor* a_aggressor, f
 
 			if(poiseDamagePercent >= 0.15 && poiseDamagePercent < 0.3)
 			{
-				Cast_Spell(a_target, "", 0.0f);
-				
+				Cast_Spell(a_target, "BHR_Normal_Impact", 0.0f);
+
 			} else if (poiseDamagePercent >= 0.3 && poiseDamagePercent < 0.5) 
 			{
-				Cast_Spell(a_target, "", 0.0f);
+				Cast_Spell(a_target, "BHR_Powerful_Impact", 0.0f);
 
 			} else if (poiseDamagePercent >= 0.5) 
 			{
-				Cast_Spell(a_target, "", 0.0f);
+				Cast_Spell(a_target, "BHR_Seismic_Impact", 0.0f);
 			}
 		}
 	}
