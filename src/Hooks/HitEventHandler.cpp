@@ -155,7 +155,7 @@ void HitEventHandler::PreProcessHit(RE::Actor* target, RE::HitData* hitData)
 	if (aggressor && poiseAV->CanDamageActor(target)) {
 		if (!(target->AsActorValueOwner()->GetActorValue(RE::ActorValue::kHealth) <= hitData->totalDamage)) {
 			auto poiseDamage = RecalculateStagger(target, aggressor, hitData);
-			poiseAV->DamageAndCheckPoise(target, aggressor, poiseDamage);
+			poiseAV->DamageAndCheckPoise(target, aggressor, poiseDamage, hitData);
 		}
 		// auto poiseDamage = RecalculateStagger(target, aggressor, hitData);
 		// poiseAV->DamageAndCheckPoise(target, aggressor, poiseDamage);
