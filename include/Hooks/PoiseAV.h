@@ -36,8 +36,10 @@ public:
 
 	void Cast_Spell(RE::Actor* a_actor, std::string a_spell, float a_mag)
 	{
-		if (const auto caster = a_actor->GetMagicCaster(RE::MagicSystem::CastingSource::kInstant); caster) {
-			caster->CastSpellImmediate(RE::TESForm::LookupByEditorID<RE::MagicItem>(a_spell), false, a_actor, 1, false, a_mag, a_actor);
+		if (const auto e_spell = RE::TESForm::LookupByEditorID<RE::MagicItem>(a_spell); e_spell) {
+			if (const auto caster = a_actor->GetMagicCaster(RE::MagicSystem::CastingSource::kInstant); caster) {
+				caster->CastSpellImmediate(e_spell, false, a_actor, 1, false, a_mag, a_actor);
+			}
 		}
 	};
 
