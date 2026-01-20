@@ -77,6 +77,7 @@ public:
 		RE::BSFixedString Deliverance_Perk = "ORD_Bck90_Deliverance_Perk_90_OrdASISExclude";
 		RE::BSFixedString QuickReflexes_Perk = "ORD_Bck40_QuickReflexes_Perk_40_QuickReflexes";
 		RE::BSFixedString SkullRattler_Perk = "ORD_Bck50_SkullRattler_Perk_50_WasDeadlyBash";
+		RE::BSFixedString DragonScales_Perk = "ORD_Bck90_HoldTheLine_Perk_90_OrdASISExclude";
 
 	} perks;
 
