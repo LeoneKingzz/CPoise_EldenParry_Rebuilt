@@ -109,11 +109,11 @@ void PoiseAV::DamageAndCheckPoise(RE::Actor* a_target, RE::Actor* a_aggressor, f
 
 		if (a_hitData && a_hitData->flags && a_hitData->flags.all(RE::HitData::Flag::kBlocked)) {
 
-			if(poiseDamagePercent >= 0.1 && poiseDamagePercent < 0.3)
+			if(poiseDamagePercent >= 0.05 && poiseDamagePercent < 0.25)
 			{
 				Cast_Spell(a_target, "BHR_Normal_Impact", 0.0f);
 
-			} else if (poiseDamagePercent >= 0.3 && poiseDamagePercent < 0.5) 
+			} else if (poiseDamagePercent >= 0.25 && poiseDamagePercent < 0.5) 
 			{
 				Cast_Spell(a_target, "BHR_Powerful_Impact", 0.0f);
 
