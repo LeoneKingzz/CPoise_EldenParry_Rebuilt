@@ -221,7 +221,7 @@ public:
 			if (!weaponL) {
 				if (!isHumanoid(a_aggressor)) {
 					//and attacker is not humanoid/
-					if (defender_weaponType && defender_weaponType->IsHandToHandMelee()) {
+					if (defender_weaponType && defender_weaponType->GetWeaponType() == RE::WEAPON_TYPE::kHandToHandMelee) {
 						//Defender parries with hand//
 						if (PoiseAV::GetSingleton()->Score_GetBaseActorValue(a_aggressor) <= 11.0f) {
 							//it's a tiny creature//
@@ -471,7 +471,7 @@ public:
 					}
 				} else {
 					//Attacker is humanoid//
-					if (defender_weaponType && defender_weaponType->IsHandToHandMelee()) {
+					if (defender_weaponType && defender_weaponType->GetWeaponType() == RE::WEAPON_TYPE::kHandToHandMelee) {
 						//Dedender parrries with hand//
 						if (bHasEldenParryPerk2) {
 							if (a_reprisal >= 10.0f) {
@@ -569,7 +569,7 @@ public:
 
 			//Hand to Hand //
 
-			if (defender_weaponType && defender_weaponType->IsHandToHandMelee() && aggressor_weaponType->IsHandToHandMelee()) {
+			if (defender_weaponType && defender_weaponType->GetWeaponType() == RE::WEAPON_TYPE::kHandToHandMelee && aggressor_weaponType->GetWeaponType() == RE::WEAPON_TYPE::kHandToHandMelee) {
 				// and atacker is humanoid//
 				if (bHasEldenParryPerk2) {
 					if (a_reprisal >= 10.0f) {
@@ -650,8 +650,8 @@ public:
 
 			// defender parries with hand against a weapon or sheild = punish defender)
 
-			if (defender_weaponType && defender_weaponType->IsHandToHandMelee()) {
-				if (!(aggressor_weaponType->IsHandToHandMelee())) {
+			if (defender_weaponType && defender_weaponType->GetWeaponType() == RE::WEAPON_TYPE::kHandToHandMelee) {
+				if (!(aggressor_weaponType->GetWeaponType() == RE::WEAPON_TYPE::kHandToHandMelee)) {
 					a_defender->NotifyAnimationGraph(recoilLargeStart);
 					if (a_reprisal <= 0.0f) {
 						a_reprisal += 50.0f;
@@ -663,8 +663,8 @@ public:
 
 			// defender parries with weapon/sheild against hand attack and attacker is humanoid = punish attacker) //&& isHumanoid(a_aggressor)
 
-			if (!(defender_weaponType && defender_weaponType->IsHandToHandMelee())) {
-				if (aggressor_weaponType->IsHandToHandMelee()) {
+			if (!(defender_weaponType && defender_weaponType->GetWeaponType() == RE::WEAPON_TYPE::kHandToHandMelee)) {
+				if (aggressor_weaponType->GetWeaponType() == RE::WEAPON_TYPE::kHandToHandMelee) {
 					a_aggressor->NotifyAnimationGraph(recoilLargeStart);
 					if (a_reprisal <= 0.0f) {
 						a_reprisal += 50.0f;
@@ -829,7 +829,7 @@ public:
 			//WeaponAI only//
 			if (!isHumanoid(a_aggressor)) {
 				//and attacker is not humanoid/
-				if (defender_weaponType && defender_weaponType->IsHandToHandMelee()) {
+				if (defender_weaponType && defender_weaponType->GetWeaponType() == RE::WEAPON_TYPE::kHandToHandMelee) {
 					//Defender parries with hand//
 					if (PoiseAV::GetSingleton()->Score_GetBaseActorValue(a_aggressor) <= 11.0f) {
 						//it's a tiny creature//
@@ -1080,7 +1080,7 @@ public:
 				}
 			} else {
 				//Attacker is humanoid//
-				if (defender_weaponType && defender_weaponType->IsHandToHandMelee()) {
+				if (defender_weaponType && defender_weaponType->GetWeaponType() == RE::WEAPON_TYPE::kHandToHandMelee) {
 					//Dedender parrries with hand//
 					if (bHasEldenParryPerk2) {
 						if (a_reprisal >= 10.0f) {
